@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - WriteSphere</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% extends "blog/base.html" %}
+{% block content %}
+<h2>All Posts</h2>
+<a href="{% url 'create_post' %}">Create New Post</a>
+<ul>
+  {% for post in posts %}
+    <li>
+      <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+      <small>by {{ post.author.username }} on {{ post.created_at }}</small>
+    </li>
+  {% empty %}
+    <li>No posts yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
+</body>
+</html>
