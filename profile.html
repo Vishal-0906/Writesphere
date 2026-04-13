@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user_profile.username }} - Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% extends "blog/base.html" %}
+{% block content %}
+<h2>{{ user_profile.username }}'s Profile</h2>
+<p>Email: {{ user_profile.email }}</p>
+<p>Role: {{ user_profile.role }}</p>
+
+{% if request.user != user_profile %}
+    <a href="{% url 'follow_author' user_profile.id %}">Follow</a>
+{% endif %}
+
+<h3>Posts by {{ user_profile.username }}</h3>
+<ul>
+  {% for post in user_profile.post_set.all %}
+    <li><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></li>
+  {% empty %}
+    <li>No posts yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
+</body>
+</html>
